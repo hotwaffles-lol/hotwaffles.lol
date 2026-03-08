@@ -1,0 +1,18 @@
+# Deployment staging
+out/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Vite build outputs
+photostitch/dist/
+woodshops/dist/
+
+# Node
+photostitch/node_modules/
+woodshops/node_modules/
+
+# Logs
+npm-debug.log*
+**/npm-debug.log*
