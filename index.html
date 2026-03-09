@@ -3,33 +3,590 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="hot waffles lol" />
     <link rel="icon" type="image/png" href="waffle.png" />
-    <title>hot waffles lol</title>
-    <style type="text/css">
-      div {
+    <title>hotwaffles.lol</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Futura, Arial, sans-serif;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        padding: 0;
+        overflow: hidden;
+        background-color: #ffe55c;
+        background-image: repeating-linear-gradient(
+            0deg,
+            rgba(180, 100, 0, 0.045) 0,
+            rgba(180, 100, 0, 0.045) 1px,
+            transparent 1px,
+            transparent 64px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(180, 100, 0, 0.045) 0,
+            rgba(180, 100, 0, 0.045) 1px,
+            transparent 1px,
+            transparent 64px
+          ),
+          linear-gradient(160deg, #fffde8 0%, #fff3c0 45%, #ffe55c 100%);
       }
-      h1 {
-        padding: 0;
-        margin: 0;
-        width: 100%;
+      body.deluxe {
+        background-color: #3b0764;
+        background-image: repeating-linear-gradient(
+            0deg,
+            rgba(200, 100, 255, 0.06) 0,
+            rgba(200, 100, 255, 0.06) 1px,
+            transparent 1px,
+            transparent 64px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(200, 100, 255, 0.06) 0,
+            rgba(200, 100, 255, 0.06) 1px,
+            transparent 1px,
+            transparent 64px
+          ),
+          linear-gradient(160deg, #1e0540 0%, #4c1d95 50%, #6d28d9 100%);
+      }
+
+      /* ── background waffles ── */
+      .bg-waffles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .flyer {
+        position: absolute;
+        opacity: 0.28;
+        line-height: 1;
+      }
+
+      .waffle-body {
+        display: block;
+        animation: tilt var(--tilt) ease-in-out infinite;
+      }
+
+      @keyframes tilt {
+        0%,
+        100% {
+          transform: rotate(-5deg);
+        }
+        50% {
+          transform: rotate(5deg);
+        }
+      }
+
+      /* ── main content ── */
+      main {
+        position: relative;
+        z-index: 1;
         text-align: center;
-        font-size: 16rem;
+        padding: 2rem;
+      }
+
+      .hero-waffle {
+        display: block;
+        font-size: clamp(5rem, 20vw, 8.5rem);
+        line-height: 1;
+        margin-bottom: 1.2rem;
+        filter: drop-shadow(4px 6px 0 rgba(150, 80, 0, 0.18));
+        animation: waffle-bob 3s ease-in-out infinite;
+        cursor: default;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+          filter 0.8s ease;
+        user-select: none;
+      }
+      .hero-waffle:hover {
+        transform: scale(1.15) rotate(10deg);
+      }
+      body.deluxe .hero-waffle {
+        filter: drop-shadow(4px 6px 0 rgba(120, 0, 255, 0.4));
+      }
+
+      @keyframes waffle-bob {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(-3deg);
+        }
+        50% {
+          transform: translateY(-16px) rotate(3deg);
+        }
+      }
+
+      h1 {
+        color: #c04800;
+        width: fit-content;
+        margin-inline: auto;
+        transition: color 0.6s ease;
+      }
+      h1 svg {
+        fill: currentColor;
+        width: min(30rem, 100%);
+        color: #c04800;
+      }
+      body.deluxe h1 {
+        color: #ede9fe;
+      }
+      body.deluxe h1 svg {
+        color: #ede9fe;
+      }
+
+      .deluxe-btn {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 2;
+        padding: 0.55rem 1.3rem;
+        border: 2px solid rgba(150, 75, 0, 0.28);
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: rgba(120, 60, 0, 0.7);
+        cursor: pointer;
+        box-shadow: 0 2px 12px rgba(150, 75, 0, 0.12);
+        transition: color 0.25s, border-color 0.25s, background 0.25s,
+          transform 0.2s, box-shadow 0.25s;
+        user-select: none;
+      }
+      .deluxe-btn:hover {
+        border-color: rgba(150, 75, 0, 0.55);
+        color: rgba(100, 45, 0, 1);
+        background: rgba(255, 255, 255, 0.75);
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(150, 75, 0, 0.2);
+      }
+      body.deluxe .deluxe-btn {
+        border-color: rgba(167, 139, 250, 0.45);
+        color: rgba(210, 195, 255, 0.9);
+        background: rgba(50, 15, 90, 0.55);
+        box-shadow: 0 2px 12px rgba(109, 40, 217, 0.3);
+      }
+      body.deluxe .deluxe-btn:hover {
+        border-color: rgba(167, 139, 250, 0.85);
+        color: rgba(237, 233, 254, 1);
+        background: rgba(80, 30, 140, 0.75);
+        box-shadow: 0 4px 20px rgba(109, 40, 217, 0.5);
       }
     </style>
   </head>
   <body>
-    <div>
-      <h1>🧇</h1>
-    </div>
+    <div class="bg-waffles" aria-hidden="true"></div>
+
+    <main>
+      <span class="hero-waffle">🧇</span>
+      <h1>
+        <svg
+          viewBox="0 0 1893 295"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          role="img"
+          aria-labelledby="svg-title"
+        >
+          <title id="svg-title">Hot Waffles</title>
+          <defs>
+            <path
+              d="M88.0292969,111.228516 L58.5859375,99.8027344 L100.333984,16.0136719 L122.599609,25.0957031 L88.0292969,111.228516 Z M29.4355469,111.228516 L-0.0078125,99.8027344 L41.7402344,16.0136719 L64.0058594,25.0957031 L29.4355469,111.228516 Z M200.822266,114.304688 L298.380859,114.304688 L298.380859,25.828125 L332.511719,25.828125 L332.511719,252 L298.380859,252 L298.380859,146.384766 L200.822266,146.384766 L200.822266,252 L166.691406,252 L166.691406,25.828125 L200.822266,25.828125 L200.822266,114.304688 Z M373.673828,179.636719 C373.673828,159.031147 381.046801,141.502025 395.792969,127.048828 C410.539136,112.595631 428.507707,105.369141 449.699219,105.369141 C470.988388,105.369141 489.054613,112.644458 503.898438,127.195312 C518.546948,141.746167 525.871094,159.617082 525.871094,180.808594 C525.871094,202.195419 518.498121,220.115162 503.751953,234.568359 C488.908129,248.9239 470.69542,256.101562 449.113281,256.101562 C427.726456,256.101562 409.806713,248.777417 395.353516,234.128906 C380.900318,219.675709 373.673828,201.511828 373.673828,179.636719 Z M407.365234,180.222656 C407.365234,194.48054 411.17379,205.759724 418.791016,214.060547 C426.603555,222.459026 436.906186,226.658203 449.699219,226.658203 C462.589908,226.658203 472.89254,222.507854 480.607422,214.207031 C488.322304,205.906208 492.179688,194.822335 492.179688,180.955078 C492.179688,167.087821 488.322304,156.003948 480.607422,147.703125 C472.794883,139.304646 462.492251,135.105469 449.699219,135.105469 C437.1015,135.105469 426.896523,139.304646 419.083984,147.703125 C411.271445,156.101604 407.365234,166.94134 407.365234,180.222656 Z M596.476562,140.085938 L596.476562,252 L563.517578,252 L563.517578,140.085938 L549.455078,140.085938 L549.455078,109.324219 L563.517578,109.324219 L563.517578,57.0292969 L596.476562,57.0292969 L596.476562,109.324219 L622.111328,109.324219 L622.111328,140.085938 L596.476562,140.085938 Z M754.533203,25.828125 L813.419922,177 L874.943359,14.8417969 L933.830078,177 L996.378906,25.828125 L1033.43945,25.828125 L932.365234,266.355469 L874.210938,106.101562 L813.566406,266.501953 L717.472656,25.828125 L754.533203,25.828125 Z M1142.7168,109.324219 L1175.82227,109.324219 L1175.82227,252 L1142.7168,252 L1142.7168,237.058594 C1129.14251,249.75397 1114.54305,256.101562 1098.91797,256.101562 C1079.19131,256.101562 1062.88288,248.972728 1049.99219,234.714844 C1037.19915,220.16399 1030.80273,202.000109 1030.80273,180.222656 C1030.80273,158.835831 1037.19915,141.013743 1049.99219,126.755859 C1062.78522,112.497976 1078.80069,105.369141 1098.03906,105.369141 C1114.64071,105.369141 1129.53314,112.20501 1142.7168,125.876953 L1142.7168,109.324219 Z M1064.49414,180.222656 C1064.49414,193.8946 1068.15621,205.027301 1075.48047,213.621094 C1083.00004,222.312543 1092.4726,226.658203 1103.89844,226.658203 C1116.10553,226.658203 1125.96871,222.459026 1133.48828,214.060547 C1141.00785,205.369097 1144.76758,194.334051 1144.76758,180.955078 C1144.76758,167.576105 1141.00785,156.541059 1133.48828,147.849609 C1125.96871,139.353473 1116.20319,135.105469 1104.19141,135.105469 C1092.86322,135.105469 1083.39066,139.402301 1075.77344,147.996094 C1068.25387,156.687543 1064.49414,167.429624 1064.49414,180.222656 Z M1251.55469,140.085938 L1251.55469,252 L1218.44922,252 L1218.44922,140.085938 L1206.73047,140.085938 L1206.73047,109.324219 L1218.44922,109.324219 L1218.44922,54.2460938 C1218.44922,36.2772539 1221.57419,23.5820684 1227.82422,16.1601562 C1236.41801,5.80854199 1248.91789,0.6328125 1265.32422,0.6328125 C1271.18362,0.6328125 1278.5566,2.34177979 1287.44336,5.75976562 L1287.44336,39.4511719 L1284.07422,37.6933594 C1276.94528,34.0800601 1271.08596,32.2734375 1266.49609,32.2734375 C1260.63669,32.2734375 1256.68165,34.3730259 1254.63086,38.5722656 C1252.58007,42.6738486 1251.55469,50.5839258 1251.55469,62.3027344 L1251.55469,109.324219 L1287.44336,109.324219 L1287.44336,140.085938 L1251.55469,140.085938 Z M1423.9668,252 L1391.00781,252 L1391.00781,58.3476562 C1391.00781,51.1210576 1388.56643,44.7734648 1383.68359,39.3046875 C1378.80076,33.7382534 1372.79496,30.9550781 1365.66602,30.9550781 C1358.53707,30.9550781 1352.53127,33.6894258 1347.64844,39.1582031 C1342.86326,44.5293237 1340.4707,50.9257441 1340.4707,58.3476562 L1340.4707,109.324219 L1378.26367,109.324219 L1378.26367,140.085938 L1340.4707,140.085938 L1340.4707,252 L1307.51172,252 L1307.51172,140.085938 L1295.79297,140.085938 L1295.79297,109.324219 L1307.51172,109.324219 L1307.51172,58.3476562 C1307.51172,42.3319512 1313.22455,28.6602129 1324.65039,17.3320312 C1336.07623,5.90619287 1349.79679,0.193359375 1365.8125,0.193359375 C1381.82821,0.193359375 1395.49994,5.90619287 1406.82812,17.3320312 C1418.25396,28.6602129 1423.9668,42.3319512 1423.9668,58.3476562 L1423.9668,252 Z M1595.64648,188.425781 L1493.40039,188.425781 C1494.2793,200.14459 1498.08786,209.470668 1504.82617,216.404297 C1511.56449,223.240269 1520.20698,226.658203 1530.75391,226.658203 C1538.95707,226.658203 1545.74411,224.705098 1551.11523,220.798828 C1556.3887,216.892559 1562.3945,209.666068 1569.13281,199.119141 L1596.96484,214.646484 C1592.66795,221.97074 1588.12698,228.245091 1583.3418,233.469727 C1578.55662,238.694362 1573.42971,242.991194 1567.96094,246.360352 C1562.49216,249.729509 1556.58402,252.195305 1550.23633,253.757812 C1543.88864,255.32032 1537.00394,256.101562 1529.58203,256.101562 C1508.29286,256.101562 1491.20319,249.265693 1478.3125,235.59375 C1465.42181,221.82415 1458.97656,203.562614 1458.97656,180.808594 C1458.97656,158.249887 1465.2265,139.988351 1477.72656,126.023438 C1490.32428,112.253837 1507.02333,105.369141 1527.82422,105.369141 C1548.82042,105.369141 1565.42181,112.058527 1577.62891,125.4375 C1589.73834,138.718816 1595.79297,157.126835 1595.79297,180.662109 L1595.64648,188.425781 Z M1561.80859,161.472656 C1557.21873,143.894443 1546.13485,135.105469 1528.55664,135.105469 C1524.55271,135.105469 1520.79299,135.715814 1517.27734,136.936523 C1513.7617,138.157233 1510.56349,139.915028 1507.68262,142.209961 C1504.80174,144.504894 1502.33595,147.263656 1500.28516,150.486328 C1498.23436,153.709 1496.67188,157.371073 1495.59766,161.472656 L1561.80859,161.472656 Z M1714.5918,133.640625 L1687.3457,148.142578 C1683.04881,139.353472 1677.72659,134.958984 1671.37891,134.958984 C1668.35155,134.958984 1665.76368,135.959951 1663.61523,137.961914 C1661.46679,139.963877 1660.39258,142.527328 1660.39258,145.652344 C1660.39258,151.121121 1666.74017,156.540989 1679.43555,161.912109 C1696.9161,169.431678 1708.68356,176.365203 1714.73828,182.712891 C1720.793,189.060579 1723.82031,197.605415 1723.82031,208.347656 C1723.82031,222.117256 1718.74224,233.640579 1708.58594,242.917969 C1698.72261,251.707075 1686.80866,256.101562 1672.84375,256.101562 C1648.91785,256.101562 1631.97466,244.431757 1622.01367,221.091797 L1650.13867,208.054688 C1654.04494,214.890659 1657.02343,219.236319 1659.07422,221.091797 C1663.07815,224.802753 1667.86325,226.658203 1673.42969,226.658203 C1684.56256,226.658203 1690.12891,221.580129 1690.12891,211.423828 C1690.12891,205.564424 1685.83207,200.095729 1677.23828,195.017578 C1673.91795,193.357414 1670.59767,191.746102 1667.27734,190.183594 C1663.95701,188.621086 1660.58791,187.009774 1657.16992,185.349609 C1647.59956,180.662086 1640.86135,175.974633 1636.95508,171.287109 C1631.97458,165.330048 1629.48438,157.664109 1629.48438,148.289062 C1629.48438,135.886657 1633.73238,125.632853 1642.22852,117.527344 C1650.91997,109.421834 1661.46673,105.369141 1673.86914,105.369141 C1692.13095,105.369141 1705.70503,114.792875 1714.5918,133.640625 Z M1784.31836,16.0136719 L1813.61523,27.4394531 L1771.86719,111.228516 L1749.60156,102 L1784.31836,16.0136719 Z M1842.91211,16.0136719 L1872.20898,27.4394531 L1830.46094,111.228516 L1808.19531,102 L1842.91211,16.0136719 Z"
+              id="path-1"
+            ></path>
+            <filter
+              x="-0.5%"
+              y="-3.6%"
+              width="102.1%"
+              height="117.6%"
+              filterUnits="objectBoundingBox"
+              id="filter-normal"
+            >
+              <feMorphology
+                radius="2.5"
+                operator="dilate"
+                in="SourceAlpha"
+                result="shadowSpreadOuter1"
+              ></feMorphology>
+              <feOffset
+                dx="14"
+                dy="14"
+                in="shadowSpreadOuter1"
+                result="shadowOffsetOuter1"
+              ></feOffset>
+              <feColorMatrix
+                values="0 0 0 0 0.6   0 0 0 0 0.25   0 0 0 0 0  0 0 0 0.5 0"
+                type="matrix"
+                in="shadowOffsetOuter1"
+              ></feColorMatrix>
+            </filter>
+            <filter
+              x="-0.5%"
+              y="-3.6%"
+              width="102.1%"
+              height="117.6%"
+              filterUnits="objectBoundingBox"
+              id="filter-deluxe"
+            >
+              <feMorphology
+                radius="2.5"
+                operator="dilate"
+                in="SourceAlpha"
+                result="shadowSpreadOuter1"
+              ></feMorphology>
+              <feOffset
+                dx="14"
+                dy="14"
+                in="shadowSpreadOuter1"
+                result="shadowOffsetOuter1"
+              ></feOffset>
+              <feColorMatrix
+                values="0 0 0 0 0.35   0 0 0 0 0.1   0 0 0 0 0.9  0 0 0 0.5 0"
+                type="matrix"
+                in="shadowOffsetOuter1"
+              ></feColorMatrix>
+            </filter>
+          </defs>
+          <g
+            id="Page-1"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
+            <g id="“HotWaffes”" fill-rule="nonzero">
+              <use
+                fill="currentColor"
+                fill-opacity="1"
+                filter="url(#filter-normal)"
+                xlink:href="#path-1"
+              ></use>
+              <use fill="currentColor" xlink:href="#path-1"></use>
+            </g>
+          </g>
+        </svg>
+      </h1>
+    </main>
+
+    <button class="deluxe-btn" onclick="toggleDeluxe()">✨ go deluxe</button>
+
+    <script>
+      // ── constants ──
+      const PAD = 160;          // px beyond viewport edge before a waffle is considered "off screen"
+      const DESCENT = 0.45;     // how far down the screen (as a fraction of vh) each waffle drifts as it crosses
+      const UNDULATE = 14;      // amplitude in px of the vertical sine wave added to each waffle's path
+      const NORMAL_COUNT = 22;  // background waffles always present
+      const EXTRA_COUNT = 22;   // additional waffles that only appear in deluxe mode
+      const NORMAL_OP = 0.28;   // background waffle opacity in normal mode
+      const DELUXE_OP = 0.55;   // background waffle opacity in deluxe mode
+
+      // persist deluxe preference across visits
+      let isDeluxe = localStorage.getItem("deluxe") === "1";
+
+      // ── create waffle elements ──
+      const container = document.querySelector(".bg-waffles");
+      const waffles = [];
+
+      // Creates one background waffle DOM element and returns a state object
+      // for it. `extra` waffles are slightly larger and faster, and are only
+      // shown in deluxe mode.
+      function makeWaffle(extra) {
+        const el = document.createElement("div");
+        el.className = "flyer";
+        const em = document.createElement("span");
+        em.className = "waffle-body";
+        em.textContent = "🧇";
+        // randomise the CSS tilt animation duration so waffles rock at different rates
+        em.style.setProperty(
+          "--tilt",
+          (2 + Math.random() * 2).toFixed(2) + "s"
+        );
+        el.appendChild(em);
+        container.appendChild(el);
+
+        // random font-size gives each waffle a unique apparent size/depth
+        const size = ((extra ? 1.8 : 1.4) + Math.random() * 2.0).toFixed(2);
+        // park off-screen until the animation loop places them properly
+        el.style.cssText = `font-size:${size}em; left:-9999px; top:-9999px;`;
+
+        return {
+          el,
+          extra,
+          top: -0.15 + Math.random() * 0.85,    // starting vertical position as a fraction of vh (slight overshoot above/below)
+          speed: (extra ? 7 : 9) + Math.random() * (extra ? 11 : 14), // seconds to cross the full screen
+          prog: Math.random(),                   // 0–1 progress along the flight path (randomised so they don't all start at the right edge)
+          undulateSpeed: 1.5 + Math.random() * 2.5,  // frequency of the sine wave bobbing
+          undulatePhase: Math.random() * Math.PI * 2, // phase offset so waffles are out of sync
+          chaseSpeed: 0.03 + Math.random() * 0.1,    // lerp factor when homing toward the cursor (lower = lazier)
+          baseR: 40 + Math.random() * 90,            // orbit radius around cursor while chasing
+          angle: Math.random() * Math.PI * 2,        // fixed angle in that orbit so waffles spread out
+          bobSpeed: 1.0 + Math.random() * 2.5,       // how fast the orbit radius pulses while chasing
+          bobPhase: Math.random() * Math.PI * 2,     // phase offset for the orbit pulse
+          // state machine: 'flying' | 'chasing' | 'returning'
+          state: "flying",
+          cx: 0, cy: 0,  // current centre position in px
+          w: 0, h: 0,    // measured element dimensions (set after first render frame)
+          // snapshot of where the waffle was when it left its flight path to chase
+          frozenProg: 0, frozenTop: 0, frozenTime: 0,
+        };
+      }
+
+      for (let n = 0; n < NORMAL_COUNT; n++) waffles.push(makeWaffle(false));
+      for (let n = 0; n < EXTRA_COUNT; n++) waffles.push(makeWaffle(true));
+
+      // Let the browser render one frame so the elements have real dimensions,
+      // then measure each waffle and kick off the animation loop.
+      requestAnimationFrame(() => {
+        for (const w of waffles) {
+          const r = w.el.getBoundingClientRect();
+          w.w = r.width || 48;
+          w.h = r.height || 48;
+        }
+        requestAnimationFrame(tick);
+      });
+
+      // ── cursor tracking ──
+      // Smoothed cursor velocity is used to shrink waffle orbits when the
+      // mouse is moving fast (so they don't scatter wildly).
+      let cursor = { x: innerWidth / 2, y: innerHeight / 2 };
+      let smoothVel = 0,
+        lastCx = cursor.x,
+        lastCy = cursor.y;
+      document.addEventListener("mousemove", (e) => {
+        cursor.x = e.clientX;
+        cursor.y = e.clientY;
+      });
+
+      // ── path math ──
+      // Returns the ideal {cx, cy} for a waffle on its flight path at a given
+      // moment. prog=0 → just off the right edge; prog=1 → just off the left edge.
+      // A sine wave is added to cy so the path undulates vertically over time.
+      function flyPos(top, prog, t, w) {
+        const vw = innerWidth,
+          vh = innerHeight;
+        return {
+          cx: vw + PAD - prog * (vw + 2 * PAD),
+          cy:
+            top * vh +
+            prog * (DESCENT * vh) +
+            Math.sin(t * w.undulateSpeed + w.undulatePhase) * UNDULATE,
+        };
+      }
+
+      // ── main loop ──
+      let prevTs = 0;
+
+      function tick(ts) {
+        // dt is elapsed seconds since last frame, capped to avoid huge jumps after
+        // the tab is backgrounded and then foregrounded.
+        const dt = prevTs ? Math.min((ts - prevTs) / 1000, 0.05) : 0;
+        prevTs = ts;
+        const t = ts / 1000;   // absolute time in seconds (used for sine calculations)
+        const vw = innerWidth;
+
+        // compute a smoothed cursor speed (exponential moving average)
+        const dvx = cursor.x - lastCx,
+          dvy = cursor.y - lastCy;
+        smoothVel = smoothVel * 0.85 + Math.sqrt(dvx * dvx + dvy * dvy) * 0.15;
+        lastCx = cursor.x;
+        lastCy = cursor.y;
+        // velScale → 1 when mouse is still, approaches 0 when mouse moves fast
+        const velScale = 1 - Math.min(smoothVel / 18, 0.85);
+
+        for (const w of waffles) {
+          // hide extra waffles entirely when not in deluxe mode
+          if (w.extra && !isDeluxe) {
+            w.el.style.left = "-9999px";
+            continue;
+          }
+
+          const targetOp = isDeluxe ? DELUXE_OP : NORMAL_OP;
+
+          if (w.state === "flying") {
+            // advance along the path based on elapsed time and the waffle's speed
+            w.prog += dt / w.speed;
+            const p = flyPos(w.top, w.prog, t, w);
+            w.cx = p.cx;
+            w.cy = p.cy;
+            // once fully off the left edge, reset to the right and pick a new vertical lane
+            if (w.cx + w.w / 2 < 0) {
+              w.prog = 0;
+              w.top = -0.15 + Math.random() * 0.85;
+            }
+
+          } else if (w.state === "chasing") {
+            // orbit radius pulses over time and collapses when the cursor moves fast
+            const r =
+              w.baseR *
+              velScale *
+              (0.4 + 0.6 * Math.sin(t * w.bobSpeed + w.bobPhase));
+            // target point is a fixed angle around the cursor at radius r
+            const tx = cursor.x + r * Math.cos(w.angle);
+            const ty = cursor.y + r * Math.sin(w.angle);
+            // lerp toward target — lower chaseSpeed means a lazier, floatier follow
+            w.cx += (tx - w.cx) * w.chaseSpeed;
+            w.cy += (ty - w.cy) * w.chaseSpeed;
+
+          } else if (w.state === "returning") {
+            // fade back to the normal background opacity
+            const op = parseFloat(w.el.style.opacity) || 1;
+            if (op > targetOp)
+              w.el.style.opacity = Math.max(targetOp, op - 0.015).toFixed(3);
+
+            // compute where the waffle *would* be if it had kept flying the whole time
+            // (rawGp is intentionally NOT modded by 1 — we want to detect loop completion)
+            const elapsed = (ts - w.frozenTime) / 1000;
+            const rawGp = w.frozenProg + elapsed / w.speed;
+
+            if (rawGp >= 1) {
+              // the ghost path has completed a full loop; rather than jumping to prog=0
+              // (which would shoot the waffle to the right edge), compute prog from the
+              // waffle's current x position so it re-joins the path smoothly in place.
+              const resumeProg = (vw + PAD - w.cx) / (vw + 2 * PAD);
+              w.prog = Math.max(0, Math.min(0.999, resumeProg));
+              w.top = w.frozenTop;
+              w.state = "flying";
+              w.el.style.opacity = String(targetOp);
+            } else {
+              // lerp toward the ghost position so the waffle drifts back to its path
+              const ghost = flyPos(w.frozenTop, rawGp, t, w);
+              w.cx += (ghost.cx - w.cx) * 0.05;
+              w.cy += (ghost.cy - w.cy) * 0.05;
+              // snap to flying state once close enough to avoid endless asymptotic approach
+              if (Math.hypot(ghost.cx - w.cx, ghost.cy - w.cy) < 8) {
+                w.prog = rawGp;
+                w.top = w.frozenTop;
+                w.state = "flying";
+                w.el.style.opacity = String(targetOp);
+              }
+            }
+          }
+
+          // only write position styles when the waffle is near the visible area;
+          // otherwise park it at -9999px to keep it out of the render tree
+          if (
+            w.state !== "flying" ||
+            (w.cx + w.w / 2 > -80 && w.cx - w.w / 2 < vw + 80)
+          ) {
+            w.el.style.left = w.cx - w.w / 2 + "px";
+            w.el.style.top = w.cy - w.h / 2 + "px";
+          } else {
+            w.el.style.left = "-9999px";
+          }
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      // ── swarm control ──
+      // Hovering the hero waffle triggers a swarm: all background waffles switch
+      // to 'chasing' and orbit the cursor. After the mouse leaves and 3 seconds
+      // pass, they drift back to their original flight paths.
+      let returnTimer = null;
+
+      function startChase() {
+        clearTimeout(returnTimer);
+        // raise the waffle container above main content so waffles render on top
+        container.style.zIndex = "10";
+        const now = performance.now();
+        for (const w of waffles) {
+          if (w.extra && !isDeluxe) continue;
+          // snapshot the current path position so we can resume from here on return
+          if (w.state === "flying") {
+            w.frozenProg = w.prog;
+            w.frozenTop = w.top;
+            w.frozenTime = now;
+          }
+          w.state = "chasing";
+          w.el.style.opacity = "1";  // fully opaque while swarming
+        }
+      }
+
+      function beginReturn() {
+        clearTimeout(returnTimer);
+        // delay the return so waffles don't immediately scatter the moment the
+        // mouse leaves — gives the effect a bit of stickiness
+        returnTimer = setTimeout(() => {
+          container.style.zIndex = "";
+          for (const w of waffles) {
+            if (w.state === "chasing") w.state = "returning";
+          }
+        }, 3000);
+      }
+
+      const heroWaffle = document.querySelector(".hero-waffle");
+      heroWaffle.addEventListener("mouseenter", startChase);
+      heroWaffle.addEventListener("mouseleave", beginReturn);
+
+      // ── deluxe mode ──
+      const btn = document.querySelector(".deluxe-btn");
+      const h1 = document.querySelector("h1");
+
+      // Applies the current isDeluxe state to the DOM: swaps colours, button
+      // label, page title, waffle count/opacity, and the SVG drop-shadow filter.
+      function applyDeluxe() {
+        document.body.classList.toggle("deluxe", isDeluxe);
+        btn.textContent = isDeluxe ? "☀️ go normal" : "✨ go deluxe";
+        document.title = isDeluxe ? "hotwaffles.lol ✨" : "hotwaffles.lol";
+        document.getElementById("svg-title").textContent = isDeluxe ? "Hot Waffles Deluxe" : "Hot Waffles";
+        const targetOp = isDeluxe ? DELUXE_OP : NORMAL_OP;
+        for (const w of waffles) {
+          // activate extra waffles when entering deluxe; scatter them at random positions
+          if (w.extra && isDeluxe) {
+            w.prog = Math.random();
+            w.top = -0.15 + Math.random() * 0.85;
+            w.state = "flying";
+          }
+          if (w.state === "flying") {
+            w.el.style.opacity = String(targetOp);
+          }
+        }
+        // swap the SVG title drop-shadow between warm (normal) and purple (deluxe)
+        document
+          .querySelector("use[filter]")
+          .setAttribute(
+            "filter",
+            isDeluxe ? "url(#filter-deluxe)" : "url(#filter-normal)"
+          );
+      }
+
+      function toggleDeluxe() {
+        isDeluxe = !isDeluxe;
+        localStorage.setItem("deluxe", isDeluxe ? "1" : "0");
+        applyDeluxe();
+      }
+
+      // restore saved deluxe state on page load
+      if (isDeluxe) applyDeluxe();
+
+      // ── tab title easter egg ──
+      // Cycles through fun messages in the tab title when the user switches away,
+      // then restores the real title when they come back.
+      const away = [
+        "🧇 getting cold…",
+        "🔥 still hot!",
+        "🧇 come back!",
+        "⏳ waffles waiting…",
+      ];
+      let i = 0;
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+          document.title = isDeluxe ? "hotwaffles.lol ✨" : "hotwaffles.lol";
+        } else {
+          document.title = away[i++ % away.length];
+        }
+      });
+    </script>
   </body>
-  <!-- 👀 -->
 </html>

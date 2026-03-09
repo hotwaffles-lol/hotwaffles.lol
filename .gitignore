@@ -1,18 +1,38 @@
 # Deployment staging
 out/
 
+# Claude agent config (local only)
+**/.claude/
+
 # macOS
 .DS_Store
 **/.DS_Store
 
 # Vite build outputs
 photostitch/dist/
-woodshops/dist/
 
 # Node
 photostitch/node_modules/
-woodshops/node_modules/
+
+# woodshops is its own repo
+woodshops/
+# photostitch is its own repo
+photostitch/
+# fitmapped is its own repo
+fitmapped
+
+# Vite SSR build output
+**/dist-ssr/
+
+# Local env files (may contain secrets)
+**/*.local
 
 # Logs
 npm-debug.log*
 **/npm-debug.log*
+
+.env
+
+.env.*
+
+!.env.example
